@@ -1,7 +1,7 @@
 services:
   - type: web
-    name: nss-rgukt-basar
-    env: node
+    name: nss-web-site
+    runtime: node
     plan: free
     buildCommand: npm run build
     startCommand: npm start
@@ -11,7 +11,7 @@ services:
       - key: MONGO_URI
         sync: false
       - key: JWT_SECRET
-        generateValue: true
+        sync: false
       - key: ADMIN_EMAIL
         value: admin@rgukt.ac.in
       - key: ADMIN_PASSWORD

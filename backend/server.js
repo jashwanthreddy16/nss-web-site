@@ -104,6 +104,14 @@ app.use("/api/*", (req, res) => {
   res.status(404).json({ message: "API endpoint not found" });
 });
 
+// Serve Frontend Static Assets in Production
+const frontendDist = path.join(__dirname, "../frontend/dist");
+app.use(express.static(frontendDist));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendDist, "index.html"));
+});
+
 // Global error handler (Never expose sensitive stack/keys in responses)
 app.use((err, req, res, next) => {
   console.error("Unhandled Server Error:", err.message);

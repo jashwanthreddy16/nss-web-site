@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import activitiesData from "../activitiesData";
 import "../styles/activities.css";
 
 const verticals = [
@@ -168,21 +167,71 @@ function ActivityGalleryCard({ activity }) {
 }
 
 function Activities() {
+  const [activities, setActivities] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const totalHours = activitiesData.reduce(
-    (total, activity) => total + activity.hours,
+  useEffect(() => {
+    let isMounted = true;
+    fetch("/api/activities")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to load activities (Status ${response.status})`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (isMounted) {
+          setActivities(data);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (isMounted) {
+          setError(err.message || "Failed to load activities. Please check your network connection.");
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handleRetry = () => {
+    setLoading(true);
+    setError(null);
+    fetch("/api/activities")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to load activities (Status ${response.status})`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setActivities(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message || "Failed to load activities. Please check your network connection.");
+        setLoading(false);
+      });
+  };
+
+  const totalHours = activities.reduce(
+    (total, activity) => total + (activity.hours || 0),
     0
   );
 
   const getVerticalActivities = (verticalName) => {
-    return activitiesData.filter(
+    return activities.filter(
       (activity) => activity.vertical === verticalName
     );
   };
 
   const getVerticalHours = (verticalName) => {
     return getVerticalActivities(verticalName).reduce(
-      (total, activity) => total + activity.hours,
+      (total, activity) => total + (activity.hours || 0),
       0
     );
   };
@@ -265,223 +314,274 @@ function Activities() {
 
       </section>
 
+      {/* Loading state banner */}
+      {loading && (
+        <div style={{ textAlign: "center", padding: "60px 20px" }}>
+          <div style={{ fontSize: "18px", color: "#174a7e", fontWeight: "600", marginBottom: "8px" }}>
+            Loading Activities & Events...
+          </div>
+          <p style={{ color: "#718096", fontSize: "14px", margin: 0 }}>
+            Fetching verified service records from NSS RGUKT Basar
+          </p>
+        </div>
+      )}
+
+      {/* Error state banner */}
+      {error && !loading && (
+        <div
+          style={{
+            textAlign: "center",
+            padding: "28px 20px",
+            backgroundColor: "#fff5f5",
+            borderRadius: "8px",
+            border: "1px solid #fed7d7",
+            maxWidth: "500px",
+            margin: "30px auto",
+          }}
+        >
+          <p style={{ color: "#c53030", fontWeight: "600", marginBottom: "12px", fontSize: "15px" }}>
+            {error}
+          </p>
+          <button
+            type="button"
+            onClick={handleRetry}
+            style={{
+              backgroundColor: "#174a7e",
+              color: "#ffffff",
+              border: "none",
+              borderRadius: "4px",
+              padding: "8px 20px",
+              cursor: "pointer",
+              fontWeight: "600",
+              fontSize: "14px",
+            }}
+          >
+            Retry
+          </button>
+        </div>
+      )}
+
 
       {/* =====================================================
           VOLUNTEER ENGAGEMENT
       ===================================================== */}
 
-      <section className="engagement-section">
+      {!loading && !error && (
+        <>
+          <section className="engagement-section">
 
-        <div className="section-heading">
+            <div className="section-heading">
 
-          <span className="section-kicker">
-            01 • VOLUNTEER ENGAGEMENT
-          </span>
+              <span className="section-kicker">
+                01 • VOLUNTEER ENGAGEMENT
+              </span>
 
-          <h2>
-            Hours of participation
-          </h2>
+              <h2>
+                Hours of participation
+              </h2>
 
-          <p>
-            The recorded activities represent {totalHours} hours
-            of participation across seven NSS service verticals.
-          </p>
+              <p>
+                The recorded activities represent {totalHours} hours
+                of participation across seven NSS service verticals.
+              </p>
 
-        </div>
-
-
-        <div className="engagement-summary">
-
-          <div className="hours-highlight">
-
-            <span>
-              TOTAL VOLUNTEER ENGAGEMENT
-            </span>
-
-            <strong>
-              {totalHours}
-            </strong>
-
-            <small>
-              hours
-            </small>
-
-          </div>
+            </div>
 
 
-          <div className="hours-breakdown">
+            <div className="engagement-summary">
 
-            {verticals.map((vertical) => {
+              <div className="hours-highlight">
 
-              const hours =
-                getVerticalHours(vertical.name);
+                <span>
+                  TOTAL VOLUNTEER ENGAGEMENT
+                </span>
 
-              const percentage =
-                totalHours === 0
-                  ? 0
-                  : (hours / totalHours) * 100;
+                <strong>
+                  {totalHours}
+                </strong>
 
-              return (
-                <div
-                  className="hours-row"
-                  key={vertical.name}
-                >
+                <small>
+                  hours
+                </small>
 
-                  <div className="hours-row-top">
+              </div>
 
-                    <span>
-                      {vertical.name}
-                    </span>
 
-                    <strong>
-                      {hours} hrs
-                    </strong>
+              <div className="hours-breakdown">
 
-                  </div>
+                {verticals.map((vertical) => {
 
-                  <div className="hours-track">
+                  const hours =
+                    getVerticalHours(vertical.name);
 
+                  const percentage =
+                    totalHours === 0
+                      ? 0
+                      : (hours / totalHours) * 100;
+
+                  return (
                     <div
-                      className="hours-fill"
-                      style={{
-                        width: `${percentage}%`,
-                      }}
-                    />
+                      className="hours-row"
+                      key={vertical.name}
+                    >
 
-                  </div>
+                      <div className="hours-row-top">
 
-                </div>
-              );
-            })}
+                        <span>
+                          {vertical.name}
+                        </span>
 
-          </div>
+                        <strong>
+                          {hours} hrs
+                        </strong>
 
-        </div>
+                      </div>
 
-      </section>
+                      <div className="hours-track">
 
+                        <div
+                          className="hours-fill"
+                          style={{
+                            width: `${percentage}%`,
+                          }}
+                        />
 
-      {/* =====================================================
-          ACTIVITY RECORD
-      ===================================================== */}
+                      </div>
 
-      <section className="matrix-section">
+                    </div>
+                  );
+                })}
 
-        <div className="section-heading">
+              </div>
 
-          <span className="section-kicker">
-            02 • ACTIVITY RECORD
-          </span>
+            </div>
 
-          <h2>
-            Activities at a glance
-          </h2>
-
-          <p>
-            A chronological view of NSS activities conducted
-            during Academic Year 2024–25.
-          </p>
-
-        </div>
+          </section>
 
 
-        <div className="activity-table-wrapper">
+          {/* =====================================================
+              ACTIVITY RECORD
+          ===================================================== */}
 
-          <table className="activity-table">
+          <section className="matrix-section">
 
-            <thead>
+            <div className="section-heading">
 
-              <tr>
-                <th>Date</th>
-                <th>Activity</th>
-                <th>Service Vertical</th>
-                <th>Objective</th>
-                <th>Impact</th>
-              </tr>
+              <span className="section-kicker">
+                02 • ACTIVITY RECORD
+              </span>
 
-            </thead>
+              <h2>
+                Activities at a glance
+              </h2>
+
+              <p>
+                A chronological view of NSS activities conducted
+                during Academic Year 2024–25.
+              </p>
+
+            </div>
 
 
-            <tbody>
+            <div className="activity-table-wrapper">
 
-              {activitiesData.map((activity) => (
+              <table className="activity-table">
 
-                <tr key={activity.id}>
+                <thead>
 
-                  <td className="table-date">
-                    {activity.date}
-                  </td>
+                  <tr>
+                    <th>Date</th>
+                    <th>Activity</th>
+                    <th>Service Vertical</th>
+                    <th>Objective</th>
+                    <th>Impact</th>
+                  </tr>
 
-                  <td className="activity-name">
-                    {activity.title}
-                  </td>
+                </thead>
 
-                  <td>
-                    <span className="table-vertical">
-                      {activity.vertical}
-                    </span>
-                  </td>
 
-                  <td>
-                    {activity.objective}
-                  </td>
+                <tbody>
 
-                  <td>
-                    {activity.impact}
-                  </td>
+                  {activities.map((activity, index) => (
 
-                </tr>
+                    <tr key={activity.id || activity._id || index}>
+
+                      <td className="table-date">
+                        {activity.date}
+                      </td>
+
+                      <td className="activity-name">
+                        {activity.title}
+                      </td>
+
+                      <td>
+                        <span className="table-vertical">
+                          {activity.vertical}
+                        </span>
+                      </td>
+
+                      <td>
+                        {activity.objective}
+                      </td>
+
+                      <td>
+                        {activity.impact}
+                      </td>
+
+                    </tr>
+
+                  ))}
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </section>
+
+
+          {/* =====================================================
+              NSS GALLERY
+          ===================================================== */}
+
+          <section className="gallery-section">
+
+            <div className="section-heading">
+
+              <span className="section-kicker">
+                03 • NSS GALLERY
+              </span>
+
+              <h2>
+                Moments of Service
+              </h2>
+
+              <p>
+                A visual journey through NSS activities, volunteer
+                participation and moments of service during
+                Academic Year 2024–25.
+              </p>
+
+            </div>
+
+
+            <div className="gallery-grid">
+
+              {activities.map((activity, index) => (
+
+                <ActivityGalleryCard
+                  key={activity.id || activity._id || index}
+                  activity={activity}
+                />
 
               ))}
 
-            </tbody>
+            </div>
 
-          </table>
-
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          NSS GALLERY
-      ===================================================== */}
-
-      <section className="gallery-section">
-
-        <div className="section-heading">
-
-          <span className="section-kicker">
-            03 • NSS GALLERY
-          </span>
-
-          <h2>
-            Moments of Service
-          </h2>
-
-          <p>
-            A visual journey through NSS activities, volunteer
-            participation and moments of service during
-            Academic Year 2024–25.
-          </p>
-
-        </div>
-
-
-        <div className="gallery-grid">
-
-          {activitiesData.map((activity) => (
-
-            <ActivityGalleryCard
-              key={activity.id}
-              activity={activity}
-            />
-
-          ))}
-
-        </div>
-
-      </section>
+          </section>
+        </>
+      )}
 
     </div>
   );

@@ -2,10 +2,18 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import path from "path";
+import dns from "node:dns";
 import { fileURLToPath } from "url";
 import Activity from "../models/Activity.js";
 import User from "../models/User.js";
 import activitiesData from "../../frontend/src/activitiesData.js";
+
+// Fix Windows Node DNS SRV lookup issues with MongoDB Atlas
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch {
+  // Ignore if not permitted
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

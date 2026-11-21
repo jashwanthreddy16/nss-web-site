@@ -1,11 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="header">
 
       {/* LEFT — INSTITUTION LOGOS */}
       <div className="header-logos">
         <img
-          src="RGUKT Logo.png"
+          src="/RGUKT Logo.png"
           alt="National Service Scheme"
           className="nss-logo"
         />
@@ -13,7 +17,7 @@ function Header() {
         <div className="logo-divider"></div>
 
         <img
-          src="nsslogo.png"
+          src="/nsslogo.png"
           alt="RGUKT Basar"
           className="rgukt-logo"
         />
@@ -47,8 +51,12 @@ function Header() {
           </div>
         </div>
 
-        <button className="login-btn">
-          Login
+        <button
+          className="login-btn"
+          onClick={() => navigate("/admin")}
+          title="Admin Portal"
+        >
+          Admin Login
         </button>
 
       </div>

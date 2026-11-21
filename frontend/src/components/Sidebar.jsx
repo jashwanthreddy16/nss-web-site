@@ -10,9 +10,13 @@ function Sidebar() {
 
         <NavLink to="/activities">Activities / Events</NavLink>
 
+        <NavLink to="/gallery">Photo Gallery</NavLink>
+
         <NavLink to="/units">Units</NavLink>
 
         <NavLink to="/alumni">Alumni</NavLink>
+
+        <NavLink to="/join">Join NSS</NavLink>
 
         <NavLink to="/contact">Contact Us</NavLink>
       </nav>

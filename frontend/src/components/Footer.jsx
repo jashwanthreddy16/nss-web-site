@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer className="footer">
@@ -8,11 +10,13 @@ function Footer() {
 
           <h3>Explore</h3>
 
-          <a href="/">Home</a>
-          <a href="/about">About Us</a>
-          <a href="/activities">Activities / Events</a>
-          <a href="/units">NSS Units</a>
-          <a href="/contact">Contact Us</a>
+          <Link to="/">Home</Link>
+          <Link to="/about">About Us</Link>
+          <Link to="/activities">Activities / Events</Link>
+          <Link to="/gallery">Photo Gallery</Link>
+          <Link to="/units">NSS Units</Link>
+          <Link to="/join">Join as Volunteer</Link>
+          <Link to="/contact">Contact Us</Link>
 
         </div>
 
@@ -45,6 +49,8 @@ function Footer() {
             RGUKT Basar
           </a>
 
+          <Link to="/admin">Admin Portal</Link>
+
         </div>
 
       </div>
@@ -54,21 +60,21 @@ function Footer() {
 
         <div className="footer-bottom-links">
 
-          <a href="/privacy">
+          <Link to="/privacy">
             Privacy Policy
-          </a>
+          </Link>
 
-          <a href="/disclaimer">
+          <Link to="/disclaimer">
             Disclaimer
-          </a>
+          </Link>
 
-          <a href="/website-policies">
+          <Link to="/website-policies">
             Website Policies
-          </a>
+          </Link>
 
-          <a href="/sitemap">
+          <Link to="/sitemap">
             Sitemap
-          </a>
+          </Link>
 
         </div>
 

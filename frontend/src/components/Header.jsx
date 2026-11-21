@@ -3,6 +3,27 @@ import { useNavigate } from "react-router-dom";
 function Header() {
   const navigate = useNavigate();
 
+  const volunteerToken = typeof window !== "undefined" ? localStorage.getItem("nss_volunteer_token") : null;
+  const adminToken = typeof window !== "undefined" ? localStorage.getItem("nss_admin_token") : null;
+  const volunteerUser = typeof window !== "undefined" ? localStorage.getItem("nss_volunteer_user") : null;
+
+  let loginLabel = "Login";
+  let targetRoute = "/login";
+
+  if (volunteerToken && volunteerUser) {
+    try {
+      const parsed = JSON.parse(volunteerUser);
+      loginLabel = `👤 ${parsed.name ? parsed.name.split(" ")[0] : "Volunteer"}`;
+      targetRoute = "/volunteer/dashboard";
+    } catch {
+      loginLabel = "My Portal";
+      targetRoute = "/volunteer/dashboard";
+    }
+  } else if (adminToken) {
+    loginLabel = "🛡️ Admin Portal";
+    targetRoute = "/admin";
+  }
+
   return (
     <header className="header">
 
@@ -53,10 +74,10 @@ function Header() {
 
         <button
           className="login-btn"
-          onClick={() => navigate("/admin")}
-          title="Admin Portal"
+          onClick={() => navigate(targetRoute)}
+          title="Sign in to Volunteer or Admin Portal"
         >
-          Admin Login
+          {loginLabel}
         </button>
 
       </div>

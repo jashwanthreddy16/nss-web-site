@@ -1,4 +1,5 @@
 import express from "express";
+import bcrypt from "bcryptjs";
 import Volunteer from "../models/Volunteer.js";
 import { protect } from "../middleware/auth.js";
 
@@ -14,7 +15,7 @@ const isValidEmail = (email) => {
 // @access  Public
 router.post("/", async (req, res) => {
   try {
-    const { name, rollNumber, branch, year, phone, email, unit, message } = req.body;
+    const { name, rollNumber, branch, year, phone, email, unit, message, password } = req.body;
 
     if (!name || !rollNumber || !branch || !year || !phone || !email) {
       return res.status(400).json({
@@ -45,6 +46,11 @@ router.post("/", async (req, res) => {
       });
     }
 
+    // Password handling: use provided password or default to rollNumber
+    const plainPassword = (password && password.trim()) ? password.trim() : cleanRollNo;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(plainPassword, salt);
+
     const newVolunteer = new Volunteer({
       name: name.trim(),
       rollNumber: cleanRollNo,
@@ -54,6 +60,9 @@ router.post("/", async (req, res) => {
       email: cleanEmail,
       unit: unit ? unit.trim() : "Any",
       message: message ? message.trim() : "",
+      password: hashedPassword,
+      serviceHours: 12,
+      status: "Active",
     });
 
     const savedVolunteer = await newVolunteer.save();
@@ -61,7 +70,15 @@ router.post("/", async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Congratulations! You have successfully registered as an NSS Volunteer.",
-      data: savedVolunteer,
+      data: {
+        _id: savedVolunteer._id,
+        name: savedVolunteer.name,
+        rollNumber: savedVolunteer.rollNumber,
+        branch: savedVolunteer.branch,
+        year: savedVolunteer.year,
+        email: savedVolunteer.email,
+        unit: savedVolunteer.unit,
+      },
     });
   } catch (error) {
     console.error("Volunteer registration error:", error.message);
@@ -76,7 +93,7 @@ router.post("/", async (req, res) => {
 // @access  Private (Admin only)
 router.get("/", protect, async (req, res) => {
   try {
-    const volunteers = await Volunteer.find({}).sort({ createdAt: -1 });
+    const volunteers = await Volunteer.find({}).select("-password").sort({ createdAt: -1 });
     res.json(volunteers);
   } catch (error) {
     console.error("Error fetching volunteers:", error.message);

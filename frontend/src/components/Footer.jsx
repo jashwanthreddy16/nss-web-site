@@ -23,7 +23,10 @@ function Footer() {
 
         <div className="footer-column">
 
-          <h3>Important Links</h3>
+          <h3>Portals & Links</h3>
+
+          <Link to="/login?role=volunteer">Volunteer Portal</Link>
+          <Link to="/admin">Admin Portal</Link>
 
           <a
             href="https://nss.gov.in/"
@@ -48,8 +51,6 @@ function Footer() {
           >
             RGUKT Basar
           </a>
-
-          <Link to="/admin">Admin Portal</Link>
 
         </div>
 

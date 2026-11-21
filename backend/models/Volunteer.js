@@ -46,6 +46,19 @@ const volunteerSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
+    serviceHours: {
+      type: Number,
+      default: 12,
+    },
+    status: {
+      type: String,
+      default: "Active",
+      enum: ["Active", "Pending", "Completed"],
+    },
   },
   {
     timestamps: true,

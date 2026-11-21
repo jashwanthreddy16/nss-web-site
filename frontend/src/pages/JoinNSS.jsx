@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function JoinNSS() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ function JoinNSS() {
     email: "",
     unit: "Any Unit",
     message: "",
+    password: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -185,6 +187,23 @@ function JoinNSS() {
             <p style={{ margin: "4px 0", fontSize: "14px" }}>
               <strong>Allocated Preference:</strong> {registeredUser.unit}
             </p>
+            <div style={{ marginTop: "14px" }}>
+              <Link
+                to="/login?role=volunteer"
+                style={{
+                  display: "inline-block",
+                  backgroundColor: "#166534",
+                  color: "#ffffff",
+                  padding: "8px 18px",
+                  borderRadius: "6px",
+                  fontSize: "13px",
+                  fontWeight: "600",
+                  textDecoration: "none",
+                }}
+              >
+                Sign In to Volunteer Portal →
+              </Link>
+            </div>
           </div>
         )}
 
@@ -343,6 +362,32 @@ function JoinNSS() {
                 }}
               />
             </div>
+          </div>
+
+          {/* Password for Volunteer Portal */}
+          <div>
+            <label htmlFor="password" style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#4a5568", marginBottom: "6px" }}>
+              Portal Password (Optional)
+            </label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Leave blank to default to your Roll Number"
+              style={{
+                width: "100%",
+                padding: "11px 14px",
+                borderRadius: "6px",
+                border: "1px solid #cbd5e0",
+                fontSize: "14px",
+                boxSizing: "border-box",
+              }}
+            />
+            <span style={{ fontSize: "12px", color: "#718096", marginTop: "4px", display: "block" }}>
+              Used to sign in to your Volunteer Dashboard. If omitted, your Roll Number will be your default password.
+            </span>
           </div>
 
           {/* Row 4: Preferred Unit */}

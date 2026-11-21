@@ -19,6 +19,8 @@ function Sidebar() {
         <NavLink to="/join">Join NSS</NavLink>
 
         <NavLink to="/contact">Contact Us</NavLink>
+
+        <NavLink to="/login">Portal Login</NavLink>
       </nav>
     </aside>
   );

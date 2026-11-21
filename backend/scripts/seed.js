@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import Activity from "../models/Activity.js";
 import User from "../models/User.js";
 import Gallery from "../models/Gallery.js";
+import Volunteer from "../models/Volunteer.js";
 import activitiesData from "../../frontend/src/activitiesData.js";
 
 // Fix Windows Node DNS SRV lookup issues with MongoDB Atlas
@@ -133,6 +134,24 @@ const seedDatabase = async () => {
 
     const insertedPhotos = await Gallery.insertMany(initialPhotos);
     console.log(`Successfully seeded ${insertedPhotos.length} gallery photos.`);
+
+    // 4. Seed Volunteer
+    await Volunteer.deleteMany({ rollNumber: "B210123" });
+    const volunteerPassword = await bcrypt.hash("volunteer123", salt);
+    const seedVol = await Volunteer.create({
+      name: "Sai Teja",
+      rollNumber: "B210123",
+      branch: "Computer Science & Engineering",
+      year: "E2 (2nd Year)",
+      phone: "9876543210",
+      email: "b210123@rgukt.ac.in",
+      unit: "Unit I - Environment & Cleanliness Drives",
+      message: "Dedicated volunteer for campus green initiatives",
+      password: volunteerPassword,
+      serviceHours: 24,
+      status: "Active",
+    });
+    console.log(`Volunteer created successfully: ${seedVol.name} (${seedVol.rollNumber})`);
 
     console.log("\nDatabase seeding completed successfully!");
     process.exit(0);

@@ -6,6 +6,7 @@ import dns from "node:dns";
 import { fileURLToPath } from "url";
 import Activity from "../models/Activity.js";
 import User from "../models/User.js";
+import Gallery from "../models/Gallery.js";
 import activitiesData from "../../frontend/src/activitiesData.js";
 
 // Fix Windows Node DNS SRV lookup issues with MongoDB Atlas
@@ -68,6 +69,70 @@ const seedDatabase = async () => {
     console.log(`  Name:  ${adminUser.name}`);
     console.log(`  Email: ${adminUser.email}`);
     console.log(`  Role:  ${adminUser.role}`);
+
+    // 3. Seed Gallery
+    await Gallery.deleteMany({});
+    const initialPhotos = [
+      {
+        title: "NSS Awareness Street Play",
+        category: "Social Awareness",
+        imagePath: "/IMG-20240211-WA0014.jpg",
+        date: "Nov 2024",
+        description: "Volunteers presenting street play on community harmony and civic duty",
+      },
+      {
+        title: "Plant Adoption & Tree Plantation",
+        category: "Environment & Plantation",
+        imagePath: "/IMG-20250504-WA0020.jpg",
+        date: "Nov 2024",
+        description: "Planting native trees across the campus perimeter",
+      },
+      {
+        title: "Mega Blood Donation Camp",
+        category: "Health & Well-being",
+        imagePath: "/IMG-20250819-WA0021.jpg",
+        date: "Jan 2025",
+        description: "Students and faculty donating blood in collaboration with Red Cross",
+      },
+      {
+        title: "Community Outreach & Village Camp",
+        category: "Community Service",
+        imagePath: "/IMG-20250712-WA0035.jpg",
+        date: "Feb 2025",
+        description: "Special rural service camp and survey in adopted village",
+      },
+      {
+        title: "National Youth Day Celebration",
+        category: "Youth & National",
+        imagePath: "/IMG-20250310-WA0010.jpg",
+        date: "Jan 2025",
+        description: "Youth empowerment convention and leadership seminar",
+      },
+      {
+        title: "Yuva Utsav Cultural & Skill Showcase",
+        category: "Youth & National",
+        imagePath: "/8KvEfkTu_400x400.jpg",
+        date: "Mar 2025",
+        description: "Celebration of talent, arts, and volunteer dedication",
+      },
+      {
+        title: "Clean Campus Initiative",
+        category: "Environment & Plantation",
+        imagePath: "/IMG-20250819-WA0009.jpg",
+        date: "Dec 2024",
+        description: "Swachh Bharat cleanliness drive across student residential zones",
+      },
+      {
+        title: "Orientation Session for New Recruits",
+        category: "Social Awareness",
+        imagePath: "/IMG-20250310-WA0018.jpg",
+        date: "Nov 2024",
+        description: "Welcoming 100+ enthusiastic new volunteers into NSS RGUKT Basar",
+      },
+    ];
+
+    const insertedPhotos = await Gallery.insertMany(initialPhotos);
+    console.log(`Successfully seeded ${insertedPhotos.length} gallery photos.`);
 
     console.log("\nDatabase seeding completed successfully!");
     process.exit(0);

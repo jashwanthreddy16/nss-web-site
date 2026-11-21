@@ -1,23 +1,23 @@
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   return (
     <aside className="sidebar">
       <nav>
-        <a href="/">Home</a>
+        <NavLink to="/">Home</NavLink>
 
-        <a href="/about">About Us</a>
+        <NavLink to="/about">About Us</NavLink>
 
-        <a href="/activities">Activities / Events</a>
+        <NavLink to="/activities">Activities / Events</NavLink>
 
-        <a href="/units">Units</a>
+        <NavLink to="/units">Units</NavLink>
 
-        <a href="/alumni">Alumni</a>
+        <NavLink to="/alumni">Alumni</NavLink>
 
-        <a href="/contact">Contact Us</a>
+        <NavLink to="/contact">Contact Us</NavLink>
       </nav>
     </aside>
   );
 }
 
 export default Sidebar;
-

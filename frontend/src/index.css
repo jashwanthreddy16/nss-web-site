@@ -6672,3 +6672,546 @@ html.font-lg { font-size: 114% !important; }
     border-radius: 12px;
   }
 }
+
+/* ==========================================================================
+   YUVA MITRA VIRTUAL ASSISTANT & PREMIER NSS DOMAINS (IIT/CENTRAL MODEL)
+   ========================================================================== */
+
+/* 1. YUVA MITRA FLOATING ACTION BUTTON */
+.gov-yuva-mitra-fab {
+  position: fixed;
+  bottom: 85px;
+  right: 22px;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0b294d 0%, #174a7e 100%);
+  color: #ffffff;
+  border: 2px solid #ff9933;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  box-shadow: 0 6px 20px rgba(11, 41, 77, 0.4);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gov-yuva-mitra-fab:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(255, 153, 51, 0.4);
+  border-color: #ffa94d;
+}
+
+.fab-avatar {
+  font-size: 20px;
+}
+
+.fab-label {
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.fab-tag {
+  background: #ff9933;
+  color: #06182c;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+/* 2. YUVA MITRA ASSISTANT WINDOW */
+.gov-yuva-mitra-window {
+  position: fixed;
+  bottom: 140px;
+  right: 22px;
+  z-index: 1060;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  max-height: 540px;
+  height: 520px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: ym-pop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes ym-pop {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ym-header {
+  background: linear-gradient(135deg, #0b294d 0%, #06182c 100%);
+  color: #ffffff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #ff9933;
+}
+
+.ym-header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ym-emblem {
+  font-size: 24px;
+}
+
+.ym-title {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0;
+  color: #ffffff;
+}
+
+.ym-sub {
+  font-size: 11px;
+  color: #ff9933;
+  margin: 2px 0 0 0;
+}
+
+.ym-close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ym-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.ym-body {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f8fafc;
+}
+
+.ym-message {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  max-width: 88%;
+}
+
+.ym-message.user {
+  margin-left: auto;
+  flex-direction: row-reverse;
+}
+
+.ym-bot-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ym-bubble {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.ym-message.bot .ym-bubble {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  border-radius: 0 12px 12px 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.ym-message.bot .ym-bubble a {
+  color: #1e40af;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.ym-message.user .ym-bubble {
+  background: #0b294d;
+  color: #ffffff;
+  border-radius: 12px 0 12px 12px;
+}
+
+.ym-bubble p {
+  margin: 0;
+}
+
+.ym-faq-tray {
+  padding: 10px 14px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+}
+
+.faq-tray-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.faq-pills {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.faq-pill-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 9999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.faq-pill-btn:hover {
+  background: #0b294d;
+  color: #ffffff;
+  border-color: #0b294d;
+}
+
+.ym-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+}
+
+.ym-input {
+  flex: 1;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  outline: none;
+}
+
+.ym-input:focus {
+  border-color: #0b294d;
+}
+
+.ym-send-btn {
+  background: #0b294d;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ym-send-btn:hover {
+  background: #ff9933;
+  color: #06182c;
+}
+
+/* 3. FUNCTIONAL DOMAINS & ACTION VERTICALS (IIT MODEL) */
+.gov-domains-section {
+  padding: 60px 20px;
+  background: #f1f5f9;
+  border-top: 1px solid #e2e8f0;
+}
+
+.gov-domains-grid {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.gov-domain-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-top: 4px solid #0b294d;
+  border-radius: 12px;
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+}
+
+.gov-domain-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.domain-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.domain-icon {
+  font-size: 30px;
+}
+
+.domain-badge {
+  font-size: 10px;
+  font-weight: 800;
+  border: 1px solid;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.domain-hindi {
+  font-size: 11px;
+  font-weight: 700;
+  color: #c2410c;
+  margin-bottom: 2px;
+}
+
+.domain-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0b294d;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.domain-desc {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #475569;
+  margin-bottom: 14px;
+}
+
+.domain-highlights {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+}
+
+.domain-highlights strong {
+  display: block;
+  font-size: 11.5px;
+  color: #0b294d;
+  margin-bottom: 6px;
+}
+
+.domain-highlights ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.domain-highlights li {
+  font-size: 11px;
+  color: #334155;
+}
+
+.domain-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0b294d;
+  text-decoration: none;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+  transition: all 0.15s ease;
+}
+
+.domain-action-btn:hover {
+  color: #ff9933;
+  padding-left: 2px;
+}
+
+/* 4. NSS 240-HOUR CERTIFICATION ROADMAP */
+.gov-progression-section {
+  padding: 60px 20px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+}
+
+.gov-progression-timeline {
+  max-width: 1320px;
+  margin: 0 auto 30px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+
+.progression-step-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 22px 18px;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.progression-step-card:hover {
+  background: #ffffff;
+  border-color: #0b294d;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px);
+}
+
+.step-num-pill {
+  width: 36px;
+  height: 36px;
+  background: #0b294d;
+  color: #ff9933;
+  font-size: 14px;
+  font-weight: 900;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  border: 2px solid #ff9933;
+}
+
+.step-badge {
+  display: inline-block;
+  background: #eff6ff;
+  color: #1e40af;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.step-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0b294d;
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+
+.step-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.step-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #475569;
+  margin: 0;
+}
+
+.progression-cta-bar {
+  max-width: 1320px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.progression-note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.progression-note span {
+  font-size: 28px;
+}
+
+.progression-note p {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #1e3a8a;
+  margin: 0;
+}
+
+.progression-enrol-btn {
+  background: #0b294d;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 800;
+  text-decoration: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.progression-enrol-btn:hover {
+  background: #174a7e;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1100px) {
+  .gov-domains-grid,
+  .gov-progression-timeline {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .gov-domains-grid,
+  .gov-progression-timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .gov-yuva-mitra-fab {
+    bottom: 80px;
+    right: 14px;
+    padding: 6px 12px;
+  }
+
+  .gov-yuva-mitra-window {
+    bottom: 130px;
+    right: 10px;
+    width: calc(100vw - 20px);
+  }
+}

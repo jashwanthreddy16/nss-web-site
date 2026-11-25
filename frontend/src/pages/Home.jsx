@@ -4,6 +4,8 @@ import QuickServicesGrid from "../components/QuickServicesGrid";
 import DignitariesShowcase from "../components/DignitariesShowcase";
 import NoticeBoardHub from "../components/NoticeBoardHub";
 import ActivityCard from "../components/ActivityCard";
+import NSSDomains from "../components/NSSDomains";
+import NSSAcademicProgression from "../components/NSSAcademicProgression";
 
 function Home() {
   return (
@@ -89,17 +91,27 @@ function Home() {
       <QuickServicesGrid />
 
       {/* =====================================================
-          4. OFFICIAL NOTICE BOARD & ACTIVITIES CALENDAR
+          4. FUNCTIONAL DOMAINS & ACTION VERTICALS (IIT Model)
+      ===================================================== */}
+      <NSSDomains />
+
+      {/* =====================================================
+          5. OFFICIAL NOTICE BOARD & ACTIVITIES CALENDAR
       ===================================================== */}
       <NoticeBoardHub />
 
       {/* =====================================================
-          5. LEADERSHIP & PATRONS SHOWCASE
+          6. NSS 240-HOUR CERTIFICATION ROADMAP
+      ===================================================== */}
+      <NSSAcademicProgression />
+
+      {/* =====================================================
+          7. LEADERSHIP & PATRONS SHOWCASE
       ===================================================== */}
       <DignitariesShowcase />
 
       {/* =====================================================
-          6. RECENT ACTIVITIES & FIELD CAMPS
+          8. RECENT ACTIVITIES & FIELD CAMPS
       ===================================================== */}
       <section className="gov-activities-section" aria-label="Recent NSS Activities">
         <div className="gov-section-header">
@@ -155,7 +167,7 @@ function Home() {
       </section>
 
       {/* =====================================================
-          7. INVITATION TO VOLUNTEER (GOVERNMENT CITIZEN CTA)
+          9. INVITATION TO VOLUNTEER (GOVERNMENT CITIZEN CTA)
       ===================================================== */}
       <section className="gov-join-cta-section" aria-label="Join National Service Scheme">
         <div className="gov-join-cta-container">

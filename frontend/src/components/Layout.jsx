@@ -4,6 +4,7 @@ import GovNavbar from "./GovNavbar";
 import TickerBar from "./TickerBar";
 import Footer from "./Footer";
 import MobileBottomNav from "./MobileBottomNav";
+import YuvaMitraAssistant from "./YuvaMitraAssistant";
 
 function Layout({ children }) {
   return (
@@ -35,6 +36,9 @@ function Layout({ children }) {
 
       {/* 7. Mobile Thumb Navigation */}
       <MobileBottomNav />
+
+      {/* 8. Yuva Mitra Virtual Assistant (nss.gov.in standard) */}
+      <YuvaMitraAssistant />
     </div>
   );
 }

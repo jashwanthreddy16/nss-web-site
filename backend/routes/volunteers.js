@@ -1,7 +1,9 @@
 import express from "express";
 import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 import Volunteer from "../models/Volunteer.js";
 import { protect } from "../middleware/auth.js";
+import { memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -30,28 +32,72 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ message: "Please provide a valid email address" });
     }
 
-    // Check for duplicate roll number or email
-    const existingVolunteer = await Volunteer.findOne({
-      $or: [{ rollNumber: cleanRollNo }, { email: cleanEmail }],
-    });
-
-    if (existingVolunteer) {
-      if (existingVolunteer.rollNumber === cleanRollNo) {
-        return res.status(400).json({
-          message: `Volunteer with roll number ${cleanRollNo} is already registered.`,
-        });
-      }
-      return res.status(400).json({
-        message: `Volunteer with email ${cleanEmail} is already registered.`,
-      });
-    }
-
     // Password handling: use provided password or default to rollNumber
     const plainPassword = (password && password.trim()) ? password.trim() : cleanRollNo;
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(plainPassword, salt);
 
-    const newVolunteer = new Volunteer({
+    // 1. Try DB if connected
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const existingVolunteer = await Volunteer.findOne({
+          $or: [{ rollNumber: cleanRollNo }, { email: cleanEmail }],
+        });
+
+        if (existingVolunteer) {
+          if (existingVolunteer.rollNumber === cleanRollNo) {
+            return res.status(400).json({
+              message: `Volunteer with roll number ${cleanRollNo} is already registered.`,
+            });
+          }
+          return res.status(400).json({
+            message: `Volunteer with email ${cleanEmail} is already registered.`,
+          });
+        }
+
+        const newVolunteer = new Volunteer({
+          name: name.trim(),
+          rollNumber: cleanRollNo,
+          branch: branch.trim(),
+          year: year.trim(),
+          phone: phone.trim(),
+          email: cleanEmail,
+          unit: unit ? unit.trim() : "Any",
+          message: message ? message.trim() : "",
+          password: hashedPassword,
+          serviceHours: 12,
+          status: "Active",
+        });
+
+        const savedVolunteer = await newVolunteer.save();
+
+        return res.status(201).json({
+          success: true,
+          message: "Congratulations! You have successfully registered as an NSS Volunteer.",
+          data: {
+            _id: savedVolunteer._id,
+            name: savedVolunteer.name,
+            rollNumber: savedVolunteer.rollNumber,
+            branch: savedVolunteer.branch,
+            year: savedVolunteer.year,
+            email: savedVolunteer.email,
+            unit: savedVolunteer.unit,
+          },
+        });
+      } catch (err) {
+        console.warn("DB volunteer registration failed, saving to memory store:", err.message);
+      }
+    }
+
+    // 2. Memory store fallback
+    const memExisting = memoryStore.findVolunteer({ rollNumber: cleanRollNo, email: cleanEmail });
+    if (memExisting) {
+      return res.status(400).json({
+        message: `Volunteer with roll number ${cleanRollNo} or email ${cleanEmail} is already registered.`,
+      });
+    }
+
+    const savedVolunteer = memoryStore.createVolunteer({
       name: name.trim(),
       rollNumber: cleanRollNo,
       branch: branch.trim(),
@@ -61,11 +107,7 @@ router.post("/", async (req, res) => {
       unit: unit ? unit.trim() : "Any",
       message: message ? message.trim() : "",
       password: hashedPassword,
-      serviceHours: 12,
-      status: "Active",
     });
-
-    const savedVolunteer = await newVolunteer.save();
 
     res.status(201).json({
       success: true,
@@ -93,27 +135,45 @@ router.post("/", async (req, res) => {
 // @access  Private (Admin only)
 router.get("/", protect, async (req, res) => {
   try {
-    const volunteers = await Volunteer.find({}).select("-password").sort({ createdAt: -1 });
-    res.json(volunteers);
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const volunteers = await Volunteer.find({}).select("-password").sort({ createdAt: -1 });
+        if (volunteers && volunteers.length > 0) {
+          return res.json(volunteers);
+        }
+      } catch (err) {
+        console.warn("DB volunteers query failed, using memory store:", err.message);
+      }
+    }
+    res.json(memoryStore.getVolunteers());
   } catch (error) {
     console.error("Error fetching volunteers:", error.message);
-    res.status(500).json({ message: "Server error fetching volunteers" });
+    res.json(memoryStore.getVolunteers());
   }
 });
 
-// @desc    Delete a volunteer record
+// @desc    Delete volunteer
 // @route   DELETE /api/volunteers/:id
 // @access  Private (Admin only)
 router.delete("/:id", protect, async (req, res) => {
   try {
-    const volunteer = await Volunteer.findById(req.params.id);
-
-    if (!volunteer) {
-      return res.status(404).json({ message: "Volunteer record not found" });
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const volunteer = await Volunteer.findById(req.params.id);
+        if (volunteer) {
+          await volunteer.deleteOne();
+          return res.json({ message: "Volunteer removed successfully", id: req.params.id });
+        }
+      } catch (err) {
+        console.warn("DB volunteer delete failed, using memory store:", err.message);
+      }
     }
 
-    await volunteer.deleteOne();
-    res.json({ message: "Volunteer registration deleted successfully", id: req.params.id });
+    const removed = memoryStore.deleteVolunteer(req.params.id);
+    if (!removed) {
+      return res.status(404).json({ message: "Volunteer not found" });
+    }
+    res.json({ message: "Volunteer removed successfully", id: req.params.id });
   } catch (error) {
     console.error("Error deleting volunteer:", error.message);
     res.status(500).json({ message: "Server error deleting volunteer" });

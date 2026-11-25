@@ -1,6 +1,8 @@
 import express from "express";
+import mongoose from "mongoose";
 import Contact from "../models/Contact.js";
 import { protect } from "../middleware/auth.js";
+import { memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -17,15 +19,34 @@ router.post("/", async (req, res) => {
       });
     }
 
-    const contact = new Contact({
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const contact = new Contact({
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          phone: phone ? phone.trim() : "",
+          subject: subject.trim(),
+          message: message.trim(),
+        });
+
+        const savedMessage = await contact.save();
+        return res.status(201).json({
+          success: true,
+          message: "Thank you for reaching out! Your message has been received.",
+          data: savedMessage,
+        });
+      } catch (err) {
+        console.warn("DB contact save failed, saving to memory store:", err.message);
+      }
+    }
+
+    const savedMessage = memoryStore.createContact({
       name: name.trim(),
       email: email.trim().toLowerCase(),
       phone: phone ? phone.trim() : "",
       subject: subject.trim(),
       message: message.trim(),
     });
-
-    const savedMessage = await contact.save();
 
     res.status(201).json({
       success: true,
@@ -46,11 +67,20 @@ router.post("/", async (req, res) => {
 // @access  Private (Admin only)
 router.get("/", protect, async (req, res) => {
   try {
-    const messages = await Contact.find({}).sort({ createdAt: -1 });
-    res.json(messages);
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const messages = await Contact.find({}).sort({ createdAt: -1 });
+        if (messages) {
+          return res.json(messages);
+        }
+      } catch (err) {
+        console.warn("DB contact query failed, using memory store:", err.message);
+      }
+    }
+    res.json(memoryStore.getContacts());
   } catch (error) {
     console.error("Error fetching contact messages:", error.message);
-    res.status(500).json({ message: "Server error fetching contact messages" });
+    res.json(memoryStore.getContacts());
   }
 });
 

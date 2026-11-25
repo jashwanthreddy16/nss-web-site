@@ -10,26 +10,27 @@ if (process.platform === "win32") {
   }
 }
 
+// Disable buffering so unhandled DB calls fail fast instead of hanging 10 seconds
+mongoose.set("bufferCommands", false);
+
 const connectDB = async () => {
   const mongoUri = process.env.MONGO_URI;
 
   if (!mongoUri) {
     console.warn(
-      "⚠️ WARNING: MONGO_URI is not defined in environment variables! Please set MONGO_URI in your Render Dashboard > Environment."
+      "⚠️ WARNING: MONGO_URI is not defined! Running with built-in in-memory fallback store."
     );
     return;
   }
 
   try {
     const conn = await mongoose.connect(mongoUri, {
-      serverSelectionTimeoutMS: 10000,
+      serverSelectionTimeoutMS: 2500, // fast failover to memory store
     });
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    console.log(`✅ MongoDB Atlas Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error(`❌ MongoDB Connection Error: ${error.message}`);
-    console.warn(
-      "⚠️ Note: Ensure your MongoDB Atlas cluster has 0.0.0.0/0 whitelisted in Network Access so cloud servers can reach it."
-    );
+    console.warn(`⚠️ MongoDB Atlas could not be reached: ${error.message}`);
+    console.log("ℹ️  Running with high-performance in-memory fallback store (all demo data, logins & activities available).");
   }
 };
 

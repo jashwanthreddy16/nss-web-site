@@ -4,6 +4,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/auth.js";
@@ -106,11 +107,25 @@ app.use("/api/*", (req, res) => {
 
 // Serve Frontend Static Assets in Production
 const frontendDist = path.join(__dirname, "../frontend/dist");
-app.use(express.static(frontendDist));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(frontendDist, "index.html"));
-});
+if (fs.existsSync(path.join(frontendDist, "index.html"))) {
+  app.use(express.static(frontendDist));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(frontendDist, "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.json({
+      message: "NSS RGUKT Basar API is running.",
+      frontend: "Development frontend running at http://localhost:5173",
+      apiEndpoints: {
+        health: "/api/health",
+        activities: "/api/activities",
+        gallery: "/api/gallery",
+        auth: "/api/auth/login",
+      },
+    });
+  });
+}
 
 // Global error handler (Never expose sensitive stack/keys in responses)
 app.use((err, req, res, next) => {

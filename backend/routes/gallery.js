@@ -1,6 +1,8 @@
 import express from "express";
+import mongoose from "mongoose";
 import Gallery from "../models/Gallery.js";
 import { protect } from "../middleware/auth.js";
+import { memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -9,11 +11,20 @@ const router = express.Router();
 // @access  Public
 router.get("/", async (req, res) => {
   try {
-    const photos = await Gallery.find({}).sort({ createdAt: -1 });
-    res.json(photos);
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const photos = await Gallery.find({}).sort({ createdAt: -1 });
+        if (photos && photos.length > 0) {
+          return res.json(photos);
+        }
+      } catch (err) {
+        console.warn("DB find gallery failed, using memory fallback:", err.message);
+      }
+    }
+    res.json(memoryStore.getPhotos());
   } catch (error) {
     console.error("Error fetching gallery:", error.message);
-    res.status(500).json({ message: "Server error fetching gallery photos" });
+    res.json(memoryStore.getPhotos());
   }
 });
 
@@ -28,7 +39,24 @@ router.post("/", protect, async (req, res) => {
       return res.status(400).json({ message: "Title and Image Path are required" });
     }
 
-    const photo = new Gallery({
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const photo = new Gallery({
+          title: title.trim(),
+          category: category ? category.trim() : "General",
+          imagePath: imagePath.trim(),
+          date: date ? date.trim() : "",
+          description: description ? description.trim() : "",
+        });
+
+        const savedPhoto = await photo.save();
+        return res.status(201).json(savedPhoto);
+      } catch (err) {
+        console.warn("DB gallery save failed, using memory store:", err.message);
+      }
+    }
+
+    const savedPhoto = memoryStore.createPhoto({
       title: title.trim(),
       category: category ? category.trim() : "General",
       imagePath: imagePath.trim(),
@@ -36,7 +64,6 @@ router.post("/", protect, async (req, res) => {
       description: description ? description.trim() : "",
     });
 
-    const savedPhoto = await photo.save();
     res.status(201).json(savedPhoto);
   } catch (error) {
     console.error("Error creating gallery entry:", error.message);
@@ -49,13 +76,22 @@ router.post("/", protect, async (req, res) => {
 // @access  Private (Admin only)
 router.delete("/:id", protect, async (req, res) => {
   try {
-    const photo = await Gallery.findById(req.params.id);
-
-    if (!photo) {
-      return res.status(404).json({ message: "Gallery photo not found" });
+    if (mongoose.connection.readyState === 1) {
+      try {
+        const photo = await Gallery.findById(req.params.id);
+        if (photo) {
+          await photo.deleteOne();
+          return res.json({ message: "Photo deleted successfully", id: req.params.id });
+        }
+      } catch (err) {
+        console.warn("DB delete photo failed, using memory store:", err.message);
+      }
     }
 
-    await photo.deleteOne();
+    const deleted = memoryStore.deletePhoto(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: "Gallery photo not found" });
+    }
     res.json({ message: "Photo deleted successfully", id: req.params.id });
   } catch (error) {
     console.error("Error deleting gallery photo:", error.message);

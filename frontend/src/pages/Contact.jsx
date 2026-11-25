@@ -20,8 +20,20 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setStatus({ type: "", message: "" });
+
+    // Client-side UX validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.subject.trim() || !formData.message.trim()) {
+      setStatus({ type: "error", message: "Please fill in all required fields (Name, Email, Subject, Message)." });
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      setStatus({ type: "error", message: "Please enter a valid email address." });
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const response = await fetch("/api/contact", {

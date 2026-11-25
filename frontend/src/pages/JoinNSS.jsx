@@ -48,8 +48,27 @@ function JoinNSS() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setStatus({ type: "", message: "" });
+
+    // Client-side UX validation
+    if (!formData.name.trim()) {
+      setStatus({ type: "error", message: "Please enter your full name." });
+      return;
+    }
+
+    const cleanRollNo = formData.rollNumber.trim().toUpperCase();
+    if (cleanRollNo.length < 6) {
+      setStatus({ type: "error", message: "Please enter a valid RGUKT ID / Roll Number (e.g. B210123)." });
+      return;
+    }
+
+    const cleanPhone = formData.phone.replace(/[^0-9]/g, "");
+    if (cleanPhone.length < 10) {
+      setStatus({ type: "error", message: "Please enter a valid 10-digit mobile number." });
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const response = await fetch("/api/volunteers", {

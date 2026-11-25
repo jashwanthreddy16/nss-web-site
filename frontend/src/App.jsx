@@ -16,6 +16,8 @@ import Login from "./pages/Login";
 import VolunteerDashboard from "./pages/VolunteerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
+import Circulars from "./pages/Circulars";
+import BloodDonors from "./pages/BloodDonors";
 import Policies from "./pages/Policies";
 import Sitemap from "./pages/Sitemap";
 import NotFound from "./pages/NotFound";
@@ -32,6 +34,8 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/alumni" element={<Alumni />} />
           <Route path="/units" element={<Units />} />
+          <Route path="/circulars" element={<Circulars />} />
+          <Route path="/blood-donors" element={<BloodDonors />} />
           <Route path="/join" element={<JoinNSS />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />

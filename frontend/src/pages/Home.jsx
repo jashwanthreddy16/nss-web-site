@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import VisitorStats from "../components/VisitorStats";
-import NotificationBar from "../components/NotificationBar";
+import ImpactCounters from "../components/ImpactCounters";
+import QuickServicesGrid from "../components/QuickServicesGrid";
+import DignitariesShowcase from "../components/DignitariesShowcase";
+import NoticeBoardHub from "../components/NoticeBoardHub";
 import ActivityCard from "../components/ActivityCard";
 
 function Home() {
   return (
-    <>
+    <div className="gov-home-wrapper">
       {/* =====================================================
-          HERO SECTION
+          1. OFFICIAL GOVERNMENT HERO BANNER
       ===================================================== */}
-
-      <section className="hero-section">
-
+      <section className="gov-hero-section" aria-label="National Service Scheme Introduction">
         <video
           className="hero-video"
           autoPlay
@@ -22,266 +22,161 @@ function Home() {
           <source src="/Nss_Intro.mp4" type="video/mp4" />
         </video>
 
-        <div className="hero-overlay"></div>
+        <div className="gov-hero-overlay"></div>
 
-        <div className="hero-content">
+        <div className="gov-hero-container">
+          <div className="gov-hero-badge">
+            <span className="hero-flag-icon">🇮🇳</span>
+            <span>MINISTRY OF YOUTH AFFAIRS & SPORTS • GOVT. OF INDIA</span>
+          </div>
 
-          <p className="hero-title">
-            NSS
-          </p>
+          <p className="gov-hero-pretitle">राष्ट्रीय सेवा योजना • RGUKT BASAR UNIT</p>
 
-          <h1 className="hero-motto">
-            Not Me, But You
+          <h1 className="gov-hero-motto">
+            &ldquo;NOT ME BUT YOU&rdquo;
           </h1>
+          <p className="gov-hero-motto-hindi">&ldquo;नाहं कर्ता हरिः कर्ता&rdquo;</p>
 
-          <p className="hero-description">
-            Empowering students through service, leadership,
-            and meaningful contribution to society.
+          <p className="gov-hero-description">
+            Empowering youth through voluntary community service, leadership development, rural immersion, and nation-building initiatives at Rajiv Gandhi University of Knowledge Technologies, Basar.
           </p>
 
-          <div className="hero-cta-group">
-            <Link to="/join" className="hero-cta-btn primary">
-              Join as Volunteer 🤝
+          <div className="gov-hero-actions">
+            <Link to="/join" className="gov-hero-btn primary-btn">
+              <span>✍️ Enrol as Volunteer 2026</span>
             </Link>
-            <Link to="/activities" className="hero-cta-btn secondary">
-              Explore Activities 📅
+            <Link to="/circulars" className="gov-hero-btn secondary-btn">
+              <span>📑 Circulars & Downloads</span>
             </Link>
+            <Link to="/blood-donors" className="gov-hero-btn emergency-btn">
+              <span>🩸 Emergency Blood Donors</span>
+            </Link>
+          </div>
+
+          {/* Quick Stats Pill */}
+          <div className="gov-hero-stats-pill">
+            <div className="hero-stat-item">
+              <strong>1,500+</strong>
+              <small>Volunteers</small>
+            </div>
+            <div className="hero-stat-sep">|</div>
+            <div className="hero-stat-item">
+              <strong>4</strong>
+              <small>Units</small>
+            </div>
+            <div className="hero-stat-sep">|</div>
+            <div className="hero-stat-item">
+              <strong>2,840+</strong>
+              <small>Blood Units</small>
+            </div>
+            <div className="hero-stat-sep">|</div>
+            <div className="hero-stat-item">
+              <strong>12,500+</strong>
+              <small>Trees Planted</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================
+          2. INSTITUTIONAL IMPACT DASHBOARD
+      ===================================================== */}
+      <ImpactCounters />
+
+      {/* =====================================================
+          3. CITIZEN & VOLUNTEER SERVICES HUB (MyGov Style)
+      ===================================================== */}
+      <QuickServicesGrid />
+
+      {/* =====================================================
+          4. OFFICIAL NOTICE BOARD & ACTIVITIES CALENDAR
+      ===================================================== */}
+      <NoticeBoardHub />
+
+      {/* =====================================================
+          5. LEADERSHIP & PATRONS SHOWCASE
+      ===================================================== */}
+      <DignitariesShowcase />
+
+      {/* =====================================================
+          6. RECENT ACTIVITIES & FIELD CAMPS
+      ===================================================== */}
+      <section className="gov-activities-section" aria-label="Recent NSS Activities">
+        <div className="gov-section-header">
+          <span className="gov-section-tag">COMMUNITY ENGAGEMENT</span>
+          <h2 className="gov-section-title">Recent Field Activities & Programs</h2>
+          <p className="gov-section-subtitle">
+            Documenting our volunteers in action across adopted villages, community welfare, and environmental conservation.
+          </p>
+          <div className="gov-title-underline">
+            <span className="underline-tricolor-saffron"></span>
+            <span className="underline-tricolor-white"></span>
+            <span className="underline-tricolor-green"></span>
           </div>
         </div>
 
-      </section>
-
-
-      {/* =====================================================
-          NSS IMPACT STATISTICS
-      ===================================================== */}
-
-      <VisitorStats />
-
-
-      {/* =====================================================
-          NOTIFICATIONS
-      ===================================================== */}
-
-      <NotificationBar />
-
-
-      {/* =====================================================
-          RECENT ACTIVITIES
-      ===================================================== */}
-
-      <section className="recent-activities">
-
-        <div className="section-title">
-          <h2>Recent Activities</h2>
-        </div>
-
-        <div className="activity-grid">
-
+        <div className="gov-activity-grid">
           <ActivityCard
             images={[
               "/IMG-20250819-WA0021.jpg",
               "/IMG-20250504-WA0020.jpg",
-              "/IMG-20240211-WA0014.jpg"
+              "/IMG-20240211-WA0014.jpg",
             ]}
-            title="SDGs & Nature"
-            description="NSS volunteers participating in activities promoting sustainable development and environmental responsibility."
+            title="Sustainable Development Goals (SDGs) & Eco-Restoration"
+            description="NSS volunteers driving environmental sustainability, plantation drives, and rainwater harvesting initiatives across the Godavari river basin."
           />
 
           <ActivityCard
             images={[
               "/IMG-20250819-WA0002.jpg",
               "/IMG-20250819-WA0009.jpg",
-              "/IMG-20250712-WA0035.jpg"
+              "/IMG-20250712-WA0035.jpg",
             ]}
-            title="Student Skill Development Activities"
-            description="Volunteers working with the community through meaningful service and social welfare activities."
+            title="Rural Youth Skill Development & Digital Literacy"
+            description="Special camps conducting computer literacy workshops, competitive exam guidance, and career awareness for rural school students."
           />
 
           <ActivityCard
             images={[
               "/IMG-20250310-WA0018.jpg",
               "/IMG-20250310-WA0010.jpg",
-              "/IMG-20250311-WA0029.jpg"
+              "/IMG-20250311-WA0029.jpg",
             ]}
-            title="Community Service and Camps"
-            description="NSS volunteers contributing to special camps and service programmes for the community."
+            title="7-Day Special Village Immersion Camp & Health Drive"
+            description="Unit-wise residential camps organizing comprehensive village socio-economic surveys, veterinary camps, and free medical health checkups."
           />
-
         </div>
 
-        <div className="activities-link">
-          <a href="/activities">
-            View All Activities →
-          </a>
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          NSS IMPACT
-      ===================================================== */}
-
-      <section className="nss-impact">
-
-        <div className="impact-heading">
-
-          <p>OUR IMPACT</p>
-
-          <h2>
-            Making a Difference Through Service
-          </h2>
-
-          <span>
-            Small actions by students can create meaningful change
-            in our communities and environment.
-          </span>
-
-        </div>
-
-        <div className="impact-grid">
-
-          <div className="impact-card">
-
-            <div className="impact-icon">
-              🌱
-            </div>
-
-            <h3>
-              Environment
-            </h3>
-
-            <p>
-              Promoting sustainability, environmental awareness
-              and responsible use of natural resources.
-            </p>
-
-          </div>
-
-
-          <div className="impact-card">
-
-            <div className="impact-icon">
-              🤝
-            </div>
-
-            <h3>
-              Community
-            </h3>
-
-            <p>
-              Working with communities through meaningful
-              service and social welfare initiatives.
-            </p>
-
-          </div>
-
-
-          <div className="impact-card">
-
-            <div className="impact-icon">
-              🎯
-            </div>
-
-            <h3>
-              Leadership
-            </h3>
-
-            <p>
-              Encouraging students to develop leadership,
-              empathy and social responsibility.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          JOIN NSS CTA
-      ===================================================== */}
-
-      <section className="join-nss">
-
-        <div className="join-nss-content">
-
-          <p className="join-label">
-            BE A PART OF THE CHANGE
-          </p>
-
-          <h2>
-            Ready to Make a Difference?
-          </h2>
-
-          <p>
-            Join NSS and become part of a community of students
-            working together to serve society and create positive change.
-          </p>
-
-          <Link to="/join" className="join-btn" style={{ textDecoration: "none", display: "inline-block" }}>
-            Join NSS
+        <div className="gov-activities-action-bar">
+          <Link to="/activities" className="gov-all-activities-btn">
+            View All Activities & Annual Reports →
           </Link>
-
         </div>
-
       </section>
-
 
       {/* =====================================================
-          NSS & COMMUNITY INITIATIVES
+          7. INVITATION TO VOLUNTEER (GOVERNMENT CITIZEN CTA)
       ===================================================== */}
-
-      <section className="initiative-section">
-
-        <h2>
-          Our Affiliations & Initiatives
-        </h2>
-
-        <div className="initiative-logos">
-
-          <div className="initiative-logo">
-            <img
-              src="/1024px-Ministry_of_Youth_Affairs_and_Sports.png"
-              alt="Ministry of Youth Affairs and Sports"
-            />
+      <section className="gov-join-cta-section" aria-label="Join National Service Scheme">
+        <div className="gov-join-cta-container">
+          <div className="gov-join-cta-content">
+            <span className="gov-join-pill">🇮🇳 BE THE CHANGE • YOUTH FOR NATION</span>
+            <h2>Ready to Serve Society & Build the Nation?</h2>
+            <p>
+              Join the National Service Scheme at RGUKT Basar. Dedicate 120 hours of service each year, lead social impact campaigns, and earn the prestigious Central NSS Certificate.
+            </p>
+            <div className="gov-join-cta-buttons">
+              <Link to="/join" className="join-cta-primary">
+                Enrol as Volunteer 2026 Online →
+              </Link>
+              <Link to="/about" className="join-cta-secondary">
+                Learn About NSS Objectives
+              </Link>
+            </div>
           </div>
-
-          <div className="initiative-logo">
-            <img
-              src="/my-bharat-logo-png_seeklogo-677239.png"
-              alt="MY Bharat"
-            />
-          </div>
-
-          <div className="initiative-logo">
-            <img
-              src="/Election-commission-L.png"
-              alt="Election Commission of India"
-            />
-          </div>
-
-          <div className="initiative-logo">
-            <img
-              src="/sdg-logo-removebg-preview.png"
-              alt="Sustainable Development Goals"
-            />
-          </div>
-
-          <div className="initiative-logo">
-            <img
-              src="/logo 5.png"
-              alt="NSS Initiative"
-            />
-          </div>
-
         </div>
-
       </section>
-
-    </>
+    </div>
   );
 }
 

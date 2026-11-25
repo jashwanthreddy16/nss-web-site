@@ -81,7 +81,7 @@ function Login() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "40px 20px",
+        padding: "clamp(20px, 4vw, 40px) 14px",
       }}
     >
       <div
@@ -92,7 +92,8 @@ function Login() {
           borderRadius: "12px",
           border: "1px solid #e2e8f0",
           boxShadow: "0 10px 30px rgba(23, 74, 126, 0.12)",
-          padding: "36px",
+          padding: "clamp(22px, 5vw, 36px)",
+          boxSizing: "border-box",
         }}
       >
         {/* Header */}

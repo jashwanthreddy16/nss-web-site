@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Units() {
   const unitsData = [
     {
@@ -35,38 +37,15 @@ function Units() {
   ];
 
   return (
-    <div style={{ padding: "40px 24px", maxWidth: "1200px", margin: "0 auto" }}>
-      <div style={{ textAlign: "center", marginBottom: "40px" }}>
-        <span
-          style={{
-            fontSize: "13px",
-            fontWeight: "700",
-            letterSpacing: "3px",
-            color: "#174a7e",
-            textTransform: "uppercase",
-          }}
-        >
+    <div className="responsive-page-container">
+      <div className="responsive-page-header">
+        <span className="responsive-page-eyebrow">
           National Service Scheme • RGUKT Basar
         </span>
-        <h1
-          style={{
-            fontSize: "36px",
-            color: "#174a7e",
-            margin: "12px 0 16px",
-            fontWeight: "700",
-          }}
-        >
+        <h1 className="responsive-page-title">
           NSS Units
         </h1>
-        <p
-          style={{
-            maxWidth: "700px",
-            margin: "0 auto",
-            color: "#4a5568",
-            fontSize: "16px",
-            lineHeight: "1.6",
-          }}
-        >
+        <p className="responsive-page-subtitle">
           The National Service Scheme at RGUKT Basar is organized into functional units,
           each fostering leadership, social responsibility, and community outreach.
         </p>
@@ -75,8 +54,8 @@ function Units() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "24px",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+          gap: "20px",
         }}
       >
         {unitsData.map((item) => (
@@ -84,8 +63,8 @@ function Units() {
             key={item.unit}
             style={{
               backgroundColor: "#ffffff",
-              borderRadius: "8px",
-              padding: "28px",
+              borderRadius: "10px",
+              padding: "24px 20px",
               border: "1px solid #e2e8f0",
               boxShadow: "0 4px 12px rgba(23, 74, 126, 0.08)",
               display: "flex",
@@ -97,12 +76,12 @@ function Units() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                marginBottom: "16px",
+                marginBottom: "14px",
                 borderBottom: "2px solid #e2e8f0",
-                paddingBottom: "12px",
+                paddingBottom: "10px",
               }}
             >
-              <h3 style={{ margin: 0, color: "#174a7e", fontSize: "22px" }}>
+              <h3 style={{ margin: 0, color: "#174a7e", fontSize: "20px" }}>
                 {item.unit}
               </h3>
               <span
@@ -119,12 +98,12 @@ function Units() {
               </span>
             </div>
 
-            <p style={{ margin: "0 0 12px", fontWeight: "600", color: "#2d3748" }}>
+            <p style={{ margin: "0 0 10px", fontWeight: "600", color: "#2d3748", fontSize: "14px" }}>
               {item.officer}
             </p>
             <p
               style={{
-                margin: "0 0 14px",
+                margin: "0 0 12px",
                 fontSize: "13px",
                 color: "#174a7e",
                 fontWeight: "600",
@@ -134,7 +113,7 @@ function Units() {
             </p>
             <p
               style={{
-                margin: 0,
+                margin: "0 0 18px",
                 color: "#4a5568",
                 fontSize: "14px",
                 lineHeight: "1.6",
@@ -143,6 +122,24 @@ function Units() {
             >
               {item.description}
             </p>
+
+            <Link
+              to="/join"
+              style={{
+                display: "inline-block",
+                textAlign: "center",
+                backgroundColor: "#174a7e",
+                color: "#ffffff",
+                padding: "10px 16px",
+                borderRadius: "6px",
+                fontSize: "13px",
+                fontWeight: "600",
+                textDecoration: "none",
+                transition: "background 0.2s ease",
+              }}
+            >
+              Join {item.unit} →
+            </Link>
           </div>
         ))}
       </div>

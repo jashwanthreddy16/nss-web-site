@@ -398,7 +398,8 @@
   }
 
   .alumni-hero h1 {
-    font-size: 50px;
+    font-size: clamp(30px, 8vw, 44px);
+    line-height: 1.15;
   }
 
   .alumni-hero-text {

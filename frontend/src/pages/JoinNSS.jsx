@@ -95,39 +95,16 @@ function JoinNSS() {
   };
 
   return (
-    <div style={{ padding: "40px 24px", maxWidth: "900px", margin: "0 auto" }}>
+    <div className="responsive-page-container">
       {/* Header Banner */}
-      <div style={{ textAlign: "center", marginBottom: "36px" }}>
-        <span
-          style={{
-            fontSize: "13px",
-            fontWeight: "700",
-            letterSpacing: "3px",
-            color: "#174a7e",
-            textTransform: "uppercase",
-          }}
-        >
+      <div className="responsive-page-header">
+        <span className="responsive-page-eyebrow">
           National Service Scheme • RGUKT Basar
         </span>
-        <h1
-          style={{
-            fontSize: "36px",
-            color: "#174a7e",
-            margin: "12px 0 16px",
-            fontWeight: "700",
-          }}
-        >
+        <h1 className="responsive-page-title">
           Join NSS as a Volunteer
         </h1>
-        <p
-          style={{
-            maxWidth: "650px",
-            margin: "0 auto",
-            color: "#4a5568",
-            fontSize: "16px",
-            lineHeight: "1.6",
-          }}
-        >
+        <p className="responsive-page-subtitle">
           Be a part of a vibrant community of change-makers dedicated to serving society,
           developing leadership, and embodying the spirit of “Not Me, But You”.
         </p>
@@ -137,8 +114,8 @@ function JoinNSS() {
       <div
         style={{
           backgroundColor: "#ffffff",
-          borderRadius: "10px",
-          padding: "36px",
+          borderRadius: "12px",
+          padding: "clamp(20px, 4vw, 36px)",
           border: "1px solid #e2e8f0",
           boxShadow: "0 6px 18px rgba(23, 74, 126, 0.08)",
         }}
@@ -209,7 +186,7 @@ function JoinNSS() {
 
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           {/* Row 1: Name and Roll Number */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 250px), 1fr))", gap: "16px" }}>
             <div>
               <label htmlFor="name" style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#4a5568", marginBottom: "6px" }}>
                 Full Name *
@@ -259,7 +236,7 @@ function JoinNSS() {
           </div>
 
           {/* Row 2: Branch and Year */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 250px), 1fr))", gap: "16px" }}>
             <div>
               <label htmlFor="branch" style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#4a5568", marginBottom: "6px" }}>
                 Department / Branch *
@@ -316,7 +293,7 @@ function JoinNSS() {
           </div>
 
           {/* Row 3: Email and Phone */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 250px), 1fr))", gap: "16px" }}>
             <div>
               <label htmlFor="email" style={{ display: "block", fontSize: "13px", fontWeight: "600", color: "#4a5568", marginBottom: "6px" }}>
                 Email Address *

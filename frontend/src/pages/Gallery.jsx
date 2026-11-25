@@ -81,69 +81,28 @@ function Gallery() {
   });
 
   return (
-    <div style={{ padding: "40px 24px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="responsive-page-container">
       {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: "36px" }}>
-        <span
-          style={{
-            fontSize: "13px",
-            fontWeight: "700",
-            letterSpacing: "3px",
-            color: "#174a7e",
-            textTransform: "uppercase",
-          }}
-        >
+      <div className="responsive-page-header">
+        <span className="responsive-page-eyebrow">
           Moments of Action • RGUKT Basar
         </span>
-        <h1
-          style={{
-            fontSize: "36px",
-            color: "#174a7e",
-            margin: "12px 0 16px",
-            fontWeight: "700",
-          }}
-        >
+        <h1 className="responsive-page-title">
           NSS Photo Gallery
         </h1>
-        <p
-          style={{
-            maxWidth: "650px",
-            margin: "0 auto",
-            color: "#4a5568",
-            fontSize: "16px",
-            lineHeight: "1.6",
-          }}
-        >
+        <p className="responsive-page-subtitle">
           Capturing our volunteers in action across community service drives,
           environmental initiatives, blood donation camps, and youth celebrations.
         </p>
       </div>
 
-      {/* Category Filter Pills */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          gap: "10px",
-          marginBottom: "36px",
-        }}
-      >
+      {/* Category Filter Pills (Horizontal swipeable on mobile) */}
+      <div className="filter-pills-scroll" style={{ justifyContent: "center" }}>
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            style={{
-              padding: "8px 18px",
-              borderRadius: "20px",
-              border: activeCategory === cat ? "1px solid #174a7e" : "1px solid #cbd5e0",
-              backgroundColor: activeCategory === cat ? "#174a7e" : "#ffffff",
-              color: activeCategory === cat ? "#ffffff" : "#4a5568",
-              fontWeight: "600",
-              fontSize: "14px",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
+            className={`filter-pill-btn ${activeCategory === cat ? "active" : ""}`}
           >
             {cat}
           </button>
@@ -179,8 +138,8 @@ function Gallery() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-            gap: "24px",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 260px), 1fr))",
+            gap: "20px",
           }}
         >
           {filteredPhotos.map((photo, idx) => (

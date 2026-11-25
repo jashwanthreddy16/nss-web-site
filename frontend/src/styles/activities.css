@@ -1087,11 +1087,12 @@
   /* HERO */
 
   .hero-content {
-    padding: 65px 6%;
+    padding: 45px 5%;
   }
 
   .hero-content h1 {
-    font-size: 52px;
+    font-size: clamp(28px, 8vw, 42px);
+    line-height: 1.2;
   }
 
   .hero-subtitle {
@@ -1194,6 +1195,14 @@
 
   .activity-table-wrapper {
     border-radius: 12px;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  }
+
+  .activity-table {
+    min-width: 620px;
   }
 
   .activity-table th,

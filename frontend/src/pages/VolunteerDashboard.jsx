@@ -75,18 +75,20 @@ function VolunteerDashboard() {
   }
 
   return (
-    <div style={{ padding: "30px 24px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="responsive-page-container">
       {/* Top Welcome Bar */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          flexWrap: "wrap",
+          gap: "14px",
           backgroundColor: "#174a7e",
           color: "#ffffff",
-          padding: "20px 28px",
+          padding: "clamp(16px, 3vw, 24px)",
           borderRadius: "10px",
-          marginBottom: "28px",
+          marginBottom: "24px",
           boxShadow: "0 4px 16px rgba(23, 74, 126, 0.15)",
         }}
       >
@@ -146,8 +148,8 @@ function VolunteerDashboard() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "28px",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
+          gap: "24px",
           alignItems: "start",
         }}
       >
@@ -263,6 +265,28 @@ function VolunteerDashboard() {
               <span>Motto: “Not Me But You”</span>
               <span>RGUKT NSS Cell</span>
             </div>
+
+            <button
+              onClick={() => window.print()}
+              style={{
+                marginTop: "16px",
+                width: "100%",
+                padding: "10px 16px",
+                background: "rgba(255,255,255,0.18)",
+                border: "1px solid rgba(255,255,255,0.4)",
+                color: "#ffffff",
+                borderRadius: "6px",
+                fontSize: "13px",
+                fontWeight: "600",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+              }}
+            >
+              🖨️ Print / Save Digital ID Card
+            </button>
           </div>
 
           {/* Quick Metrics */}

@@ -318,38 +318,42 @@ function AdminDashboard() {
   };
 
   return (
-    <div style={{ padding: "30px 24px", maxWidth: "1300px", margin: "0 auto" }}>
+    <div className="responsive-page-container">
       {/* Top Bar */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          flexWrap: "wrap",
+          gap: "14px",
           backgroundColor: "#174a7e",
           color: "#ffffff",
-          padding: "20px 28px",
+          padding: "clamp(16px, 3vw, 24px)",
           borderRadius: "10px",
-          marginBottom: "28px",
+          marginBottom: "24px",
           boxShadow: "0 4px 16px rgba(23, 74, 126, 0.15)",
         }}
       >
         <div>
-          <h1 style={{ margin: 0, fontSize: "24px", fontWeight: "700" }}>NSS Admin Dashboard</h1>
+          <h1 style={{ margin: 0, fontSize: "clamp(18px, 4vw, 24px)", fontWeight: "700" }}>
+            NSS Admin Dashboard
+          </h1>
           <p style={{ margin: "4px 0 0", fontSize: "14px", color: "#dbeafe" }}>
-            Signed in as: {user ? user.email : "admin@rgukt.ac.in"}
+            Signed in as: <strong>{user ? user.email : "admin@rgukt.ac.in"}</strong>
           </p>
         </div>
 
-        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
           <a
             href="/"
             style={{
               backgroundColor: "rgba(255, 255, 255, 0.15)",
               color: "#ffffff",
               textDecoration: "none",
-              padding: "8px 16px",
+              padding: "8px 14px",
               borderRadius: "6px",
-              fontSize: "14px",
+              fontSize: "13px",
               fontWeight: "600",
             }}
           >
@@ -361,9 +365,9 @@ function AdminDashboard() {
               backgroundColor: "#ef4444",
               color: "#ffffff",
               border: "none",
-              padding: "8px 18px",
+              padding: "8px 16px",
               borderRadius: "6px",
-              fontSize: "14px",
+              fontSize: "13px",
               fontWeight: "600",
               cursor: "pointer",
             }}
@@ -399,34 +403,35 @@ function AdminDashboard() {
         </div>
       )}
 
-      {/* Navigation Tabs */}
+      {/* Navigation Tabs (Horizontal swipeable on mobile) */}
       <div
+        className="filter-pills-scroll"
         style={{
-          display: "flex",
-          gap: "8px",
           borderBottom: "2px solid #e2e8f0",
           marginBottom: "24px",
+          paddingBottom: "4px",
         }}
       >
         {[
           { id: "activities", label: `Activities (${activities.length})` },
           { id: "volunteers", label: `Volunteers (${volunteers.length})` },
-          { id: "messages", label: `Contact Messages (${messages.length})` },
+          { id: "messages", label: `Messages (${messages.length})` },
           { id: "gallery", label: `Gallery (${gallery.length})` },
         ].map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             style={{
-              padding: "12px 24px",
+              padding: "10px 18px",
               border: "none",
               borderBottom: activeTab === tab.id ? "3px solid #174a7e" : "3px solid transparent",
               backgroundColor: "transparent",
               color: activeTab === tab.id ? "#174a7e" : "#64748b",
-              fontWeight: activeTab === tab.id ? "700" : "500",
-              fontSize: "15px",
+              fontWeight: activeTab === tab.id ? "700" : "600",
+              fontSize: "14px",
               cursor: "pointer",
-              marginBottom: "-2px",
+              whiteSpace: "nowrap",
+              flexShrink: 0,
             }}
           >
             {tab.label}
@@ -474,8 +479,8 @@ function AdminDashboard() {
           {activities.length === 0 ? (
             <p style={{ textAlign: "center", padding: "40px 0", color: "#64748b" }}>No activities recorded yet.</p>
           ) : (
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "14px" }}>
+            <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+              <table style={{ width: "100%", minWidth: "620px", borderCollapse: "collapse", fontSize: "14px" }}>
                 <thead>
                   <tr style={{ backgroundColor: "#f8fafc", textAlign: "left", borderBottom: "2px solid #e2e8f0" }}>
                     <th style={{ padding: "12px 16px" }}>Date</th>
@@ -551,8 +556,8 @@ function AdminDashboard() {
           {volunteers.length === 0 ? (
             <p style={{ textAlign: "center", padding: "40px 0", color: "#64748b" }}>No volunteers registered yet.</p>
           ) : (
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "14px" }}>
+            <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+              <table style={{ width: "100%", minWidth: "620px", borderCollapse: "collapse", fontSize: "14px" }}>
                 <thead>
                   <tr style={{ backgroundColor: "#f8fafc", textAlign: "left", borderBottom: "2px solid #e2e8f0" }}>
                     <th style={{ padding: "12px 14px" }}>Roll No</th>

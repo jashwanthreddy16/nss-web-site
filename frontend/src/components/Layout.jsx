@@ -1,6 +1,7 @@
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
+import MobileBottomNav from "./MobileBottomNav";
 
 function Layout({ children }) {
   return (
@@ -16,6 +17,7 @@ function Layout({ children }) {
       </div>
 
       <Footer />
+      <MobileBottomNav />
     </div>
   );
 }

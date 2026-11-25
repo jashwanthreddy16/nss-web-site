@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import VisitorStats from "../components/VisitorStats";
 import NotificationBar from "../components/NotificationBar";
 import ActivityCard from "../components/ActivityCard";
@@ -38,6 +39,14 @@ function Home() {
             and meaningful contribution to society.
           </p>
 
+          <div className="hero-cta-group">
+            <Link to="/join" className="hero-cta-btn primary">
+              Join as Volunteer 🤝
+            </Link>
+            <Link to="/activities" className="hero-cta-btn secondary">
+              Explore Activities 📅
+            </Link>
+          </div>
         </div>
 
       </section>
@@ -212,9 +221,9 @@ function Home() {
             working together to serve society and create positive change.
           </p>
 
-          <button className="join-btn">
+          <Link to="/join" className="join-btn" style={{ textDecoration: "none", display: "inline-block" }}>
             Join NSS
-          </button>
+          </Link>
 
         </div>
 

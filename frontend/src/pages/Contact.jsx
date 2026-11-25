@@ -63,38 +63,15 @@ function Contact() {
   };
 
   return (
-    <div style={{ padding: "40px 24px", maxWidth: "1200px", margin: "0 auto" }}>
-      <div style={{ textAlign: "center", marginBottom: "40px" }}>
-        <span
-          style={{
-            fontSize: "13px",
-            fontWeight: "700",
-            letterSpacing: "3px",
-            color: "#174a7e",
-            textTransform: "uppercase",
-          }}
-        >
+    <div className="responsive-page-container">
+      <div className="responsive-page-header">
+        <span className="responsive-page-eyebrow">
           Get in Touch
         </span>
-        <h1
-          style={{
-            fontSize: "36px",
-            color: "#174a7e",
-            margin: "12px 0 16px",
-            fontWeight: "700",
-          }}
-        >
+        <h1 className="responsive-page-title">
           Contact NSS RGUKT Basar
         </h1>
-        <p
-          style={{
-            maxWidth: "650px",
-            margin: "0 auto",
-            color: "#4a5568",
-            fontSize: "16px",
-            lineHeight: "1.6",
-          }}
-        >
+        <p className="responsive-page-subtitle">
           Have questions about NSS volunteer registration, community activities, or events?
           Reach out to our cell or send us a message below.
         </p>
@@ -103,8 +80,8 @@ function Contact() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "36px",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
+          gap: "24px",
           alignItems: "start",
         }}
       >
@@ -112,8 +89,8 @@ function Contact() {
         <div
           style={{
             backgroundColor: "#ffffff",
-            borderRadius: "8px",
-            padding: "32px",
+            borderRadius: "10px",
+            padding: "24px 20px",
             border: "1px solid #e2e8f0",
             boxShadow: "0 4px 12px rgba(23, 74, 126, 0.08)",
           }}

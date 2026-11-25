@@ -11,7 +11,7 @@ function Home() {
   return (
     <div className="gov-home-wrapper">
       {/* =====================================================
-          1. OFFICIAL GOVERNMENT HERO BANNER
+          1. OFFICIAL GOVERNMENT HERO BANNER (Clean & Neatly Labeled)
       ===================================================== */}
       <section className="gov-hero-section" aria-label="National Service Scheme Introduction">
         <video
@@ -29,18 +29,24 @@ function Home() {
         <div className="gov-hero-container">
           <div className="gov-hero-badge">
             <span className="hero-flag-icon">🇮🇳</span>
-            <span>MINISTRY OF YOUTH AFFAIRS & SPORTS • GOVT. OF INDIA</span>
+            <span>MINISTRY OF YOUTH AFFAIRS & SPORTS • GOVERNMENT OF INDIA</span>
           </div>
 
-          <p className="gov-hero-pretitle">राष्ट्रीय सेवा योजना • RGUKT BASAR UNIT</p>
-
-          <h1 className="gov-hero-motto">
-            &ldquo;NOT ME BUT YOU&rdquo;
+          <h1 className="gov-hero-title">
+            National Service Scheme (NSS)
           </h1>
-          <p className="gov-hero-motto-hindi">&ldquo;नाहं कर्ता हरिः कर्ता&rdquo;</p>
+          <p className="gov-hero-unit-name">
+            RGUKT Basar Unit • Rajiv Gandhi University of Knowledge Technologies, Telangana
+          </p>
+
+          <div className="gov-hero-motto-pill">
+            <span className="motto-en">&ldquo;NOT ME BUT YOU&rdquo;</span>
+            <span className="motto-divider">|</span>
+            <span className="motto-hi">&ldquo;नाहं कर्ता हरिः कर्ता&rdquo;</span>
+          </div>
 
           <p className="gov-hero-description">
-            Empowering youth through voluntary community service, leadership development, rural immersion, and nation-building initiatives at Rajiv Gandhi University of Knowledge Technologies, Basar.
+            Inculcating the spirit of voluntary community service, civic responsibility, and nation-building through grassroots village immersion, environmental sustainability, and life-saving health drives.
           </p>
 
           <div className="gov-hero-actions">
@@ -53,29 +59,6 @@ function Home() {
             <Link to="/blood-donors" className="gov-hero-btn emergency-btn">
               <span>🩸 Emergency Blood Donors</span>
             </Link>
-          </div>
-
-          {/* Quick Stats Pill */}
-          <div className="gov-hero-stats-pill">
-            <div className="hero-stat-item">
-              <strong>1,500+</strong>
-              <small>Volunteers</small>
-            </div>
-            <div className="hero-stat-sep">|</div>
-            <div className="hero-stat-item">
-              <strong>4</strong>
-              <small>Units</small>
-            </div>
-            <div className="hero-stat-sep">|</div>
-            <div className="hero-stat-item">
-              <strong>2,840+</strong>
-              <small>Blood Units</small>
-            </div>
-            <div className="hero-stat-sep">|</div>
-            <div className="hero-stat-item">
-              <strong>12,500+</strong>
-              <small>Trees Planted</small>
-            </div>
           </div>
         </div>
       </section>
